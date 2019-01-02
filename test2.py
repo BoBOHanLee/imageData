@@ -1,4 +1,4 @@
-# 灰階共生矩陣測試
+# 灰階共生矩陣測試  12
 import cv2
 import math
 import numpy as np
