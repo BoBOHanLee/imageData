@@ -3,6 +3,7 @@
 import  cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 img = cv2.imread("fail.jpg",0)
@@ -32,8 +33,16 @@ hog = cv2.HOGDescriptor(winSize, blockSize, blockStride, cellSize, nbins, derivA
                         L2HysThreshold, gammaCorrection, nlevels, signedGradients)
 
 descriptor = hog.compute(img)
-print(np.shape(descriptor))  # 16*16 block run 24*24 pixeks  ---->  4 positions  ; eeach 16*16 block  contain 4 historigram ---> 36   => 4*36 = 144
-print(descriptor)
+#print(np.shape(descriptor))  # 16*16 block run 24*24 pixeks  ---->  4 positions  ; eeach 16*16 block  contain 4 historigram ---> 36   => 4*36 = 144
+#print(descriptor)
 
+s1 = np.reshape(descriptor,(1,144))
+df_feature = pd.DataFrame(s1)
+print(df_feature)
+df_feature['label'] = 0
+print(df_feature)
+
+'''
 cv2.imshow("look",descriptor)
 cv2.waitKey(0)
+'''
