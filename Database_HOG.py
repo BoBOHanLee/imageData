@@ -44,7 +44,7 @@ for i in dic :
         #建立hog特徵
         descriptor = hog.compute(img)
         s1 = np.reshape(descriptor, (1, 144))  #轉換形狀
-        df_feature = pd.DataFrame(s1,  index=["{:.0f}".format(sum + n)])
+        df_feature = pd.DataFrame(s1, index=["{:.0f}".format(sum + n)])
         df_feature['label'] = label
 
 
