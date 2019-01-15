@@ -12,7 +12,7 @@ from multiprocessing import Pool
 img_success = cv2.imread("Data_success/train_35.jpg",0)
 img_clean = cv2.imread("Data_fail/train_1420.jpg",0)
 img_fail  = cv2.imread("Data_fail/train_21.jpg",0)
-
+img_noEx = cv2.imread("Data_noExtusion/train_5.jpg",0)
 
 img_clean2 = cv2.imread("Data_fail/train_12.jpg",0)
 img_clean3 = cv2.imread("Data_fail/train_31.jpg",0)
@@ -247,7 +247,7 @@ plt.show()
 '''
 
 
-
+'''
 # histogram
 hist_clean = np.bincount(img_clean.ravel(), minlength=256)
 hist_clean2 = np.bincount(img_clean2.ravel(), minlength=256)
@@ -272,13 +272,27 @@ plt.plot(hist_clean9)
 plt.plot(hist_clean10)
 plt.plot(hist_clean11)
 plt.show()
-
+'''
 
 
 '''
-for n in range(2017) :
+# histogram
+hist_success = np.bincount(img_success.ravel(), minlength=256)
+hist_clean = np.bincount(img_clean.ravel(), minlength=256)
+hist_fail = np.bincount(img_fail.ravel(), minlength=256)
+hist_noEx = np.bincount(img_noEx.ravel(), minlength=256)
+plt.plot(hist_success,label='success')
+plt.plot(hist_clean,label='background')
+plt.plot(hist_fail,label='fail')
+plt.plot(hist_noEx,label='noEx')
+plt.legend(loc='upper right')
+plt.show()
+'''
+
+
+for n in range(2508) :
     sum = 0
-    filename = "Data_fail/train_{:.0f}.jpg".format(n)
+    filename = "Data_success/train_{:.0f}.jpg".format(n)
     img = cv2.imread(filename,0)
     #四變量比較
     #entropy
@@ -300,7 +314,7 @@ for n in range(2017) :
 
     if sum==4:
         print(filename)
-'''
+
 
 
 

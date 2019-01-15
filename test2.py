@@ -82,8 +82,9 @@ def normalize_glcm(img,initial,theta):   #指定d = 1
 img_success = cv2.imread("Data_success/train_976.jpg", 0)
 img_clean = cv2.imread("Data_fail/train_1420.jpg", 0)
 img_fail = cv2.imread("Data_fail/train_21.jpg", 0)
+img_noEx = cv2.imread("Data_noExtusion/train_5.jpg",0)
 img_test = np.array([[0,0,1,1],[0,0,1,1],[0,2,2,2],[2,2,3,3]])
-img = img_fail
+img = img_noEx
 
 
 
