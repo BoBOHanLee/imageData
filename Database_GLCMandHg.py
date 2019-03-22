@@ -260,9 +260,9 @@ print(database)
 '''
 
 database = pd.DataFrame()    #建立二維資料表的框架
-dic_success = {'photo_numbers':2474 , 'file_name':"Data_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
-dic_fail = {'photo_numbers':2016 , 'file_name':"Data_fail/train_{:.0f}.jpg" , 'label' : 1}
-dic_noExtusion = {'photo_numbers':147 , 'file_name':"Data_noExtusion/train_{:.0f}.jpg" , 'label' : 2}
+dic_success = {'photo_numbers':17081 , 'file_name':"Data_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
+dic_fail = {'photo_numbers':17194 , 'file_name':"Data_fail/train_{:.0f}.jpg" , 'label' : 1}
+dic_noExtusion = {'photo_numbers':4856 , 'file_name':"Data_noExtusion/train_{:.0f}.jpg" , 'label' : 2}
 dic = [dic_success,dic_fail,dic_noExtusion]
 # for index
 sum = 0

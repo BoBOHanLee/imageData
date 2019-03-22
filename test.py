@@ -9,21 +9,14 @@ from multiprocessing import Pool
 
 
 # read
-img_success = cv2.imread("Data_success/train_35.jpg",0)
-img_clean = cv2.imread("Data_fail/train_1420.jpg",0)
-img_fail  = cv2.imread("Data_fail/train_21.jpg",0)
-img_noEx = cv2.imread("Data_noExtusion/train_5.jpg",0)
+img_success_black = cv2.imread("Data_success/train_7395.jpg",0)
+img_clean = cv2.imread("Data_noExtusion/train_32.jpg",0)
+img_fail_black  = cv2.imread("Data_fail/train_211.jpg",0)
 
-img_clean2 = cv2.imread("Data_fail/train_12.jpg",0)
-img_clean3 = cv2.imread("Data_fail/train_31.jpg",0)
-img_clean4 = cv2.imread("Data_fail/train_49.jpg",0)
-img_clean5 = cv2.imread("Data_fail/train_75.jpg",0)
-img_clean6 = cv2.imread("Data_fail/train_85.jpg",0)
-img_clean7 = cv2.imread("Data_fail/train_111.jpg",0)
-img_clean8 = cv2.imread("Data_fail/train_151.jpg",0)
-img_clean9 = cv2.imread("Data_fail/train_146.jpg",0)
-img_clean10 = cv2.imread("Data_fail/train_153.jpg",0)
-img_clean11= cv2.imread("Data_fail/train_174.jpg",0)
+img_success_white= cv2.imread("Data_success/train_12150.jpg",0)
+img_clean = cv2.imread("Data_noExtusion/train_32.jpg",0)
+img_fail_white  = cv2.imread("Data_fail/train_12502.jpg",0)
+
 
 '''
 #threshold
@@ -139,109 +132,17 @@ print(calVariation(img_fail))
 
 
 
-'''
-# the most num
-print(calMostNum(img_clean))
-print(calMostNum(img_clean2))
-print(calMostNum(img_clean3))
-print(calMostNum(img_clean4))
-print(calMostNum(img_clean5))
-print(calMostNum(img_clean6))
-print(calMostNum(img_clean7))
-print(calMostNum(img_clean8))
-print(calMostNum(img_clean9))
-print(calMostNum(img_clean10))
-print(calMostNum(img_clean11))
-'''
 
-
-
-'''
-#SD
-
-print(calSD(img_clean))
-print(calSD(img_clean2))
-print(calSD(img_clean3))
-print(calSD(img_clean4))
-print(calSD(img_clean5))
-print(calSD(img_clean6))
-print(calSD(img_clean7))
-print(calSD(img_clean8))
-print(calSD(img_clean9))
-print(calSD(img_clean10))
-print(calSD(img_clean11))
-print(calSD(img_success))
-print(calSD(img_fail))
-'''
-
-
-
-
-
-
-'''
-# medium
-print(calMidium(img_clean))
-print(calMidium(img_clean2))
-print(calMidium(img_clean3))
-print(calMidium(img_clean4))
-print(calMidium(img_clean5))
-print(calMidium(img_clean6))
-print(calMidium(img_clean7))
-print(calMidium(img_clean8))
-print(calMidium(img_clean9))
-print(calMidium(img_clean10))
-print(calMidium(img_clean11))
-'''
-
-
-
-
-'''
-# average
-print(calAverage(img_clean))
-print(calAverage(img_clean2))
-print(calAverage(img_clean3))
-print(calAverage(img_clean4))
-print(calAverage(img_clean5))
-print(calAverage(img_clean6))
-print(calAverage(img_clean7))
-print(calAverage(img_clean8))
-print(calAverage(img_clean9))
-print(calAverage(img_clean10))
-print(calAverage(img_clean11))
-'''
-
-'''
-
-# entropy
-print(calcEntropy(img_success))
-print(calcEntropy(img_clean))
-print(calcEntropy(img_fail))
-
-print(calcEntropy(img_clean2))
-print(calcEntropy(img_clean3))
-print(calcEntropy(img_clean4))
-print(calcEntropy(img_clean5))
-print(calcEntropy(img_clean6))
-print(calcEntropy(img_clean7))
-print(calcEntropy(img_clean8))
-print(calcEntropy(img_clean9))
-print(calcEntropy(img_clean10))
-print(calcEntropy(img_clean11))
-'''
-
-'''
 # histogram
 #print(calSD(img_success))
 #print(calSD(img_clean))
 #print(calSD(img_fail))
-
+'''
 hist_suc = np.bincount(img_success.ravel(), minlength=256)
 hist_clean = np.bincount(img_clean.ravel(), minlength=256)
 hist_fail = np.bincount(img_fail.ravel(), minlength=256)
-plt.plot(hist_suc)
-plt.plot(hist_clean)
+#plt.plot(hist_suc)
+#plt.plot(hist_clean)
 plt.plot(hist_fail)
 plt.show()
 '''
@@ -249,48 +150,18 @@ plt.show()
 
 '''
 # histogram
+hist_success = np.bincount(img_success_white.ravel(), minlength=256)
 hist_clean = np.bincount(img_clean.ravel(), minlength=256)
-hist_clean2 = np.bincount(img_clean2.ravel(), minlength=256)
-hist_clean3 = np.bincount(img_clean3.ravel(), minlength=256)
-hist_clean4 = np.bincount(img_clean4.ravel(), minlength=256)
-hist_clean5 = np.bincount(img_clean5.ravel(), minlength=256)
-hist_clean6 = np.bincount(img_clean6.ravel(), minlength=256)
-hist_clean7 = np.bincount(img_clean7.ravel(), minlength=256)
-hist_clean8 = np.bincount(img_clean8.ravel(), minlength=256)
-hist_clean9 = np.bincount(img_clean9.ravel(), minlength=256)
-hist_clean10 = np.bincount(img_clean10.ravel(), minlength=256)
-hist_clean11 = np.bincount(img_clean11.ravel(), minlength=256)
-plt.plot(hist_clean)
-plt.plot(hist_clean2)
-plt.plot(hist_clean3)
-plt.plot(hist_clean4)
-plt.plot(hist_clean5)
-plt.plot(hist_clean6)
-plt.plot(hist_clean7)
-plt.plot(hist_clean8)
-plt.plot(hist_clean9)
-plt.plot(hist_clean10)
-plt.plot(hist_clean11)
-plt.show()
-'''
-
-
-'''
-# histogram
-hist_success = np.bincount(img_success.ravel(), minlength=256)
-hist_clean = np.bincount(img_clean.ravel(), minlength=256)
-hist_fail = np.bincount(img_fail.ravel(), minlength=256)
-hist_noEx = np.bincount(img_noEx.ravel(), minlength=256)
+hist_fail = np.bincount(img_fail_white.ravel(), minlength=256)
 plt.plot(hist_success,label='success')
 plt.plot(hist_clean,label='background')
 plt.plot(hist_fail,label='fail')
-plt.plot(hist_noEx,label='noEx')
 plt.legend(loc='upper right')
 plt.show()
 '''
 
 
-for n in range(2508) :
+for n in range(17081) :
     sum = 0
     filename = "Data_success/train_{:.0f}.jpg".format(n)
     img = cv2.imread(filename,0)
