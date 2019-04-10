@@ -16,9 +16,9 @@ def P(i,j,d,img,theta):
     if theta == 0 :
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                  if x < width-1 and img[y,x] == i and img[y,x+d] == j :   #跟右邊比
+                  if x+d < width and img[y,x] == i and img[y,x+d] == j :   #跟右邊比
                       sum += 1
-                  if  x > 0 and img[y,x] == i and img[y,x-d] == j :   #跟左邊比
+                  if  x-d > -1 and img[y,x] == i and img[y,x-d] == j :   #跟左邊比
                       sum += 1
         return sum
 
@@ -27,9 +27,9 @@ def P(i,j,d,img,theta):
     if theta == 45:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if (x > 0 and y < height - 1 ) and img[y, x] == i and img[y + d, x - d] == j:  # 跟左下比
+                if (x-d > -1 and y+d < height  ) and img[y, x] == i and img[y + d, x - d] == j:  # 跟左下比
                     sum += 1
-                if (y > 0 and x < width - 1 ) and img[y, x] == i and img[y - d, x + d] == j:  # 跟右上比
+                if (y-d > -1 and x+d < width  ) and img[y, x] == i and img[y - d, x + d] == j:  # 跟右上比
                     sum += 1
         return sum
 
@@ -39,9 +39,9 @@ def P(i,j,d,img,theta):
     if theta == 90:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if y < height - 1 and img[y , x] == i and img[y + d, x ] == j:  # 跟下面比
+                if y+d < height  and img[y , x] == i and img[y + d, x ] == j:  # 跟下面比
                     sum += 1
-                if y > 0 and img[y, x] == i and img[y - d, x ] == j:  # 跟上面比
+                if y-d > -1 and img[y, x] == i and img[y - d, x ] == j:  # 跟上面比
                     sum += 1
         return sum
 
@@ -49,9 +49,9 @@ def P(i,j,d,img,theta):
     if theta == 135:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if (x < width - 1 and y < height - 1) and img[y, x] == i and img[y + d, x + d] == j:  # 跟右下比
+                if (x+d < width  and y+d < height ) and img[y, x] == i and img[y + d, x + d] == j:  # 跟右下比
                     sum += 1
-                if (y > 0 and x > 0) and img[y, x] == i and img[y - d, x - d] == j:  #  跟左上比
+                if (y-d > -1 and x-d > -1) and img[y, x] == i and img[y - d, x - d] == j:  #  跟左上比
                     sum += 1
         return sum
 
@@ -102,15 +102,15 @@ for  i in range(height) :   #  i 從 0 到 height-1
         img[j,i] = (int)(img[j,i]/scope)
 
 #計算灰階共生矩陣，這邊採用距離為1(d=1)，四種角度都計算
-d = 1
-theta = 0
+d = 2
+theta = 90
 # 建立灰階共生矩陣
 initial_glcm = np.zeros([max_gray_level, max_gray_level])
 for  i in range(max_gray_level) :   #  i 從 0 到 max_gray_level-1
     for j in range(max_gray_level):
         #  #(i,j)
         #initial_glcm[j,i] = P(i,j,d,img_test,135)
-        initial_glcm[j, i] = P(i, j, d, img, theta)
+        initial_glcm[j, i] = P(i, j, d,img_test, theta)
 
 
 print(initial_glcm)

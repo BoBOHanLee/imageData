@@ -1,5 +1,6 @@
 import  cv2
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 from collections import Counter
 from multiprocessing import Pool
@@ -16,6 +17,13 @@ img_fail_black  = cv2.imread("Data_fail/train_211.jpg",0)
 img_success_white= cv2.imread("Data_success/train_12150.jpg",0)
 img_clean = cv2.imread("Data_noExtusion/train_32.jpg",0)
 img_fail_white  = cv2.imread("Data_fail/train_12502.jpg",0)
+
+black_success1 = cv2.imread("Data_fail/train_63.jpg",0)
+black_success2 = cv2.imread("Data_fail/train_64.jpg",0)
+black_success3 = cv2.imread("Data_fail/train_66.jpg",0)
+black_success4 = cv2.imread("Data_fail/train_1746.jpg",0)
+black_success5 = cv2.imread("Data_fail/train_1748.jpg",0)
+black_success6 = cv2.imread("Data_fail/train_1749.jpg",0)
 
 
 '''
@@ -129,21 +137,24 @@ print(calVariation(img_fail))
 '''
 
 
-
-
-
-
 # histogram
 #print(calSD(img_success))
 #print(calSD(img_clean))
 #print(calSD(img_fail))
 '''
-hist_suc = np.bincount(img_success.ravel(), minlength=256)
-hist_clean = np.bincount(img_clean.ravel(), minlength=256)
-hist_fail = np.bincount(img_fail.ravel(), minlength=256)
-#plt.plot(hist_suc)
-#plt.plot(hist_clean)
-plt.plot(hist_fail)
+hist_suc1 = np.bincount(black_success1.ravel(), minlength=256)
+hist_suc2 = np.bincount(black_success2.ravel(), minlength=256)
+hist_suc3 = np.bincount(black_success3.ravel(), minlength=256)
+hist_suc4 = np.bincount(black_success4.ravel(), minlength=256)
+hist_suc5 = np.bincount(black_success5.ravel(), minlength=256)
+hist_suc6 = np.bincount(black_success6.ravel(), minlength=256)
+
+plt.plot(hist_suc1)
+plt.plot(hist_suc2)
+plt.plot(hist_suc3)
+plt.plot(hist_suc4)
+plt.plot(hist_suc5)
+plt.plot(hist_suc6)
 plt.show()
 '''
 
@@ -160,30 +171,58 @@ plt.legend(loc='upper right')
 plt.show()
 '''
 
-
-for n in range(17081) :
+num = 0
+for n in range(17193) :
     sum = 0
     filename = "Data_success/train_{:.0f}.jpg".format(n)
     img = cv2.imread(filename,0)
+
+    try:
+        img.shape
+    except:
+        #print('fail to read  {:n}'.format(n))
+        continue
+
+
+    #改黨名
+    filename_new = "Data_success/train_{:.0f}.jpg".format(num)
+    os.rename(filename,filename_new)
+    num += 1
+    print(num)
+
+
     #四變量比較
-    #entropy
+
     entropy = calEntropy(img)
+    mostNum = calMostNum(img)
+    val = calVariation(img)
+    std = calSD(img)
+
+    #對背景而言
     if entropy>=4 and entropy<=5:
         sum =sum +1
-    #most num
-    mostNum = calMostNum(img)
-    if mostNum>=100 and mostNum<=150:
+    if mostNum>=40 and mostNum<=150:
         sum += 1
-    #variation
-    val = calVariation(img)
-    if val<=0.1:
+    if val<=0.09:
         sum += 1
-    #std
-    std = calSD(img)
     if std>=5 and std<=10 :
         sum += 1
+    '''
+    # 對完全黑而言
+    if entropy >= 3.8 and entropy <= 4.3:
+        sum = sum + 1
+    if mostNum >= 0 and mostNum <= 25:
+        sum += 1
+    if val <= 0.8:
+        sum += 1
+    if std >= 5 and std <= 7:
+        sum += 1
+    '''
 
     if sum==4:
+        #刪除檔案
+        #os.remove(filename)
+
         print(filename)
 
 

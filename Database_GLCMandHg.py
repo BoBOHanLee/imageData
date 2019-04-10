@@ -77,9 +77,9 @@ def P(i,j,d,img,theta):
     if theta == 0 :
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                  if x < width-1 and img[y,x] == i and img[y,x+d] == j :   #跟右邊比
+                  if x+d < width and img[y,x] == i and img[y,x+d] == j :   #跟右邊比
                       sum += 1
-                  if  x > 0 and img[y,x] == i and img[y,x-d] == j :   #跟左邊比
+                  if  x-d > -1 and img[y,x] == i and img[y,x-d] == j :   #跟左邊比
                       sum += 1
         return sum
 
@@ -88,9 +88,9 @@ def P(i,j,d,img,theta):
     if theta == 45:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if (x > 0 and y < height - 1 ) and img[y, x] == i and img[y + d, x - d] == j:  # 跟左下比
+                if (x - d > -1 and y + d < height) and img[y, x] == i and img[y + d, x - d] == j:  # 跟左下比
                     sum += 1
-                if (y > 0 and x < width - 1 ) and img[y, x] == i and img[y - d, x + d] == j:  # 跟右上比
+                if (y - d > -1 and x + d < width) and img[y, x] == i and img[y - d, x + d] == j:  # 跟右上比
                     sum += 1
         return sum
 
@@ -100,9 +100,9 @@ def P(i,j,d,img,theta):
     if theta == 90:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if y < height - 1 and img[y , x] == i and img[y + d, x ] == j:  # 跟下面比
+                if y+d < height  and img[y , x] == i and img[y + d, x ] == j:  # 跟下面比
                     sum += 1
-                if y > 0 and img[y, x] == i and img[y - d, x ] == j:  # 跟上面比
+                if y-d > -1 and img[y, x] == i and img[y - d, x ] == j:  # 跟上面比
                     sum += 1
         return sum
 
@@ -110,9 +110,9 @@ def P(i,j,d,img,theta):
     if theta == 135:
         for y in range(height):  # y 從 0 到 height-1
             for x in range(width):
-                if (x < width - 1 and y < height - 1) and img[y, x] == i and img[y + d, x + d] == j:  # 跟右下比
+                if (x+d < width  and y+d < height ) and img[y, x] == i and img[y + d, x + d] == j:  # 跟右下比
                     sum += 1
-                if (y > 0 and x > 0) and img[y, x] == i and img[y - d, x - d] == j:  #  跟左上比
+                if (y-d > -1 and x-d > -1) and img[y, x] == i and img[y - d, x - d] == j:  #  跟左上比
                     sum += 1
         return sum
 
@@ -148,8 +148,8 @@ def create_GLCM(img):
             img[j, i] = (int)(img[j, i] / scope)
 
     # 計算灰階共生矩陣，這邊採用距離為1(d=1)，0角度
-    d = 1
-    theta = 0
+    d = 2
+    theta = 135                                                        #-------------------------------------------------------------------------------------
     # 建立灰階共生矩陣
     initial_glcm = np.zeros([max_gray_level, max_gray_level])
     for i in range(max_gray_level):  # i 從 0 到 max_gray_level-1
@@ -210,58 +210,11 @@ def cal_IDM(glcm,height,width):
     return  sum_idm
 
 
-#--------------------------------------------------------------------#
 
-'''
-database = pd.DataFrame()    #建立二維資料表的框架
-for n in range(2508) :   #0~2507
-    # read
-    filename = "Data_success/train_{:.0f}.jpg".format(n)
-    img = cv2.imread(filename,0)
-    print(n)
-
-    #直方圖特徵計算
-    # 四變量計算
-    hist = cv2.calcHist([img], [0], None, [256], [0, 255])
-    total_pixel = img.shape[0] * img.shape[1]
-    average = calAverage(hist, total_pixel)
-
-    entropy = calEntropy(hist,total_pixel)
-    mostNum = calMostNum(hist)
-    std = calSD(hist, average)
-    val = calVariation(average,std)
-    HGfeatures = [[mostNum,std,val,entropy]] # 1 x 4
-    #創表格，橫向特徵
-    df_HGfeatures = pd.DataFrame(HGfeatures, columns=['HG_mostNum', 'HG_std','HG_val','HG_entropy'],index = ["{:.0f}".format(n)])
-
-
-    #灰階共生矩陣特徵計算
-    glcm = create_GLCM(img)
-    height, width = glcm.shape
-
-    asm = cal_asm(glcm,height,width)
-    contrast = cal_contrast(glcm,height,width)
-    GLCMentropy = cal_GLCMentropy(glcm,height,width)
-    idm = cal_IDM(glcm,height,width)
-    GLCMfeatures = [[asm,contrast,GLCMentropy,idm,0]]  #label 給定 success = 0
-    # 創表格，橫向特徵   並且給定label(success = 0 ; fail = 1 ;noExtuition = 2 )
-    df_GLCMfeatures = pd.DataFrame(GLCMfeatures, columns=['GLCM_asm', 'GLCM_contrast', 'GLCM_entropt', 'GLCM_idm' , 'label'],
-                                 index=["{:.0f}".format(n)])
-
-
-    #所有特徵彙整
-    df_all = pd.concat([df_HGfeatures, df_GLCMfeatures], 1)  # combine in x-direction
-
-
-    #所有圖片資料彙整
-    database = database.append(df_all)  # combine in y-direction
-
-print(database)
-'''
 
 database = pd.DataFrame()    #建立二維資料表的框架
-dic_success = {'photo_numbers':17081 , 'file_name':"Data_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
-dic_fail = {'photo_numbers':17194 , 'file_name':"Data_fail/train_{:.0f}.jpg" , 'label' : 1}
+dic_success = {'photo_numbers':16853 , 'file_name':"Data_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
+dic_fail = {'photo_numbers':15095 , 'file_name':"Data_fail/train_{:.0f}.jpg" , 'label' : 1}
 dic_noExtusion = {'photo_numbers':4856 , 'file_name':"Data_noExtusion/train_{:.0f}.jpg" , 'label' : 2}
 dic = [dic_success,dic_fail,dic_noExtusion]
 # for index
@@ -286,10 +239,11 @@ for i in dic :
         average = calAverage(hist, total_pixel)
 
         entropy = calEntropy(hist, total_pixel)
+        #print(entropy[0])
         mostNum = calMostNum(hist)
         std = calSD(hist, average)
         val = calVariation(average, std)
-        HGfeatures = [[mostNum, std, val, entropy]]  # 1 x 4
+        HGfeatures = [[mostNum, std, val, entropy[0]]]  # 1 x 4
         # 創表格，橫向特徵
         df_HGfeatures = pd.DataFrame(HGfeatures, columns=['HG_mostNum', 'HG_std', 'HG_val', 'HG_entropy'],
                                      index=["{:.0f}".format(sum + n )])
@@ -322,4 +276,4 @@ for i in dic :
 #print(database)
 
 #建立.csv檔
-database.to_csv('database.csv')
+database.to_csv('database8F_2_135.csv')
