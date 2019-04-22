@@ -25,6 +25,8 @@ black_success4 = cv2.imread("Data_fail/train_1746.jpg",0)
 black_success5 = cv2.imread("Data_fail/train_1748.jpg",0)
 black_success6 = cv2.imread("Data_fail/train_1749.jpg",0)
 
+hist = cv2.calcHist([img_clean], [0], None, [256], [0, 255])
+print(hist/256)
 
 '''
 #threshold
@@ -119,6 +121,7 @@ def calVariation(img):
     return std/average
 
 
+
 '''
 #variatiom
 print(calVariation(img_clean))
@@ -170,7 +173,7 @@ plt.plot(hist_fail,label='fail')
 plt.legend(loc='upper right')
 plt.show()
 '''
-
+'''
 num = 0
 for n in range(17193) :
     sum = 0
@@ -207,7 +210,7 @@ for n in range(17193) :
         sum += 1
     if std>=5 and std<=10 :
         sum += 1
-    '''
+    
     # 對完全黑而言
     if entropy >= 3.8 and entropy <= 4.3:
         sum = sum + 1
@@ -217,14 +220,14 @@ for n in range(17193) :
         sum += 1
     if std >= 5 and std <= 7:
         sum += 1
-    '''
-
+    
+    
     if sum==4:
         #刪除檔案
         #os.remove(filename)
 
         print(filename)
-
+'''
 
 
 

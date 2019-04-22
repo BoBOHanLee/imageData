@@ -41,7 +41,7 @@ def calMostNum(hist):
           cup_i = i
 
         i += 1
-    return cup_i
+    return cup_i/256
 
 
 def calSD(hist,average):
@@ -57,8 +57,9 @@ def calSD(hist,average):
                  sum = sum + (i-average)**2
              i += 1
 
+    num = np.sqrt(sum/(255+1))[0]   #[0]為了從numpy的矩陣中取直
 
-    return  np.sqrt(sum/(255+1))[0]   #[0]為了從numpy的矩陣中取直
+    return  num
 
 
 def calVariation(average,std):
@@ -148,8 +149,8 @@ def create_GLCM(img):
             img[j, i] = (int)(img[j, i] / scope)
 
     # 計算灰階共生矩陣，這邊採用距離為1(d=1)，0角度
-    d = 2
-    theta = 135                                                        #-------------------------------------------------------------------------------------
+    d = 1
+    theta = 0                                                      #-------------------------------------------------------------------------------------
     # 建立灰階共生矩陣
     initial_glcm = np.zeros([max_gray_level, max_gray_level])
     for i in range(max_gray_level):  # i 從 0 到 max_gray_level-1
@@ -160,6 +161,7 @@ def create_GLCM(img):
 
     # 將灰階共生矩陣規範化    把count(計數)轉變為probability(機率)
     glcm = normalize_glcm(img, initial_glcm, theta)
+    #glcm = initial_glcm
 
     return  glcm
 
@@ -235,6 +237,7 @@ for i in dic :
         # 直方圖特徵計算
         # 四變量計算
         hist = cv2.calcHist([img], [0], None, [256], [0, 255])
+        #hist = hist/256 #正規化
         total_pixel = img.shape[0] * img.shape[1]
         average = calAverage(hist, total_pixel)
 
@@ -276,4 +279,4 @@ for i in dic :
 #print(database)
 
 #建立.csv檔
-database.to_csv('database8F_2_135.csv')
+database.to_csv('database_1_0_hg.csv')
