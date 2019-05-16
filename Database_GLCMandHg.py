@@ -41,7 +41,7 @@ def calMostNum(hist):
           cup_i = i
 
         i += 1
-    return cup_i/256
+    return cup_i
 
 
 def calSD(hist,average):
@@ -141,7 +141,7 @@ def normalize_glcm(img,initial,theta):   #指定d = 1
 
 def create_GLCM(img):
     #灰階0~255先分階層
-    max_gray_level = 4  # 定義最大灰度級數
+    max_gray_level = 4  # 定義最大灰度級數---------------------------------------------------------------------------------
     height, width = img.shape
     scope = 256 / max_gray_level
     for i in range(height):  # i 從 0 到 height-1
@@ -149,7 +149,7 @@ def create_GLCM(img):
             img[j, i] = (int)(img[j, i] / scope)
 
     # 計算灰階共生矩陣，這邊採用距離為1(d=1)，0角度
-    d = 1
+    d = 3
     theta = 0                                                      #-------------------------------------------------------------------------------------
     # 建立灰階共生矩陣
     initial_glcm = np.zeros([max_gray_level, max_gray_level])
@@ -215,9 +215,9 @@ def cal_IDM(glcm,height,width):
 
 
 database = pd.DataFrame()    #建立二維資料表的框架
-dic_success = {'photo_numbers':16853 , 'file_name':"Data_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
-dic_fail = {'photo_numbers':15095 , 'file_name':"Data_fail/train_{:.0f}.jpg" , 'label' : 1}
-dic_noExtusion = {'photo_numbers':4856 , 'file_name':"Data_noExtusion/train_{:.0f}.jpg" , 'label' : 2}
+dic_success = {'photo_numbers':8834 , 'file_name':"Black_success/train_{:.0f}.jpg" , 'label' : 0}   #photo_numbers 序號的最後一張(序號從0開始)
+dic_fail = {'photo_numbers':7984 , 'file_name':"Black_fail/train_{:.0f}.jpg" , 'label' : 1}
+dic_noExtusion = {'photo_numbers':2075 , 'file_name':"Data_noExtusion/train_{:.0f}.jpg" , 'label' : 2}
 dic = [dic_success,dic_fail,dic_noExtusion]
 # for index
 sum = 0
@@ -279,4 +279,4 @@ for i in dic :
 #print(database)
 
 #建立.csv檔
-database.to_csv('database_1_0_hg.csv')
+database.to_csv('database_black.csv')

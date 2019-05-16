@@ -8,8 +8,8 @@ from multiprocessing import Pool
 
 #值方圖找特徵
 
-
 # read
+'''
 img_success_black = cv2.imread("Data_success/train_7395.jpg",0)
 img_clean = cv2.imread("Data_noExtusion/train_32.jpg",0)
 img_fail_black  = cv2.imread("Data_fail/train_211.jpg",0)
@@ -27,7 +27,7 @@ black_success6 = cv2.imread("Data_fail/train_1749.jpg",0)
 
 hist = cv2.calcHist([img_clean], [0], None, [256], [0, 255])
 print(hist/256)
-
+'''
 '''
 #threshold
 __, img_clean = cv2.threshold(img_clean, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
@@ -173,11 +173,12 @@ plt.plot(hist_fail,label='fail')
 plt.legend(loc='upper right')
 plt.show()
 '''
-'''
+
+
 num = 0
-for n in range(17193) :
+for n in range(5602) :
     sum = 0
-    filename = "Data_success/train_{:.0f}.jpg".format(n)
+    filename = "collected_data/Black_success/train_{:.0f}.jpg".format(n)
     img = cv2.imread(filename,0)
 
     try:
@@ -188,10 +189,12 @@ for n in range(17193) :
 
 
     #改黨名
-    filename_new = "Data_success/train_{:.0f}.jpg".format(num)
+    filename_new = "collected_data/Black_fail/train_{:.0f}.jpg".format(num)
+    #filename_new = "Data_success/train_{:.0f}.jpg".format(num)
     os.rename(filename,filename_new)
     num += 1
     print(num)
+
 
 
     #四變量比較
@@ -200,34 +203,36 @@ for n in range(17193) :
     mostNum = calMostNum(img)
     val = calVariation(img)
     std = calSD(img)
-
+    '''
     #對背景而言
-    if entropy>=4 and entropy<=5:
+    if entropy>=0.1 and entropy<=5:
         sum =sum +1
-    if mostNum>=40 and mostNum<=150:
+    if mostNum>=0 and mostNum<=120:
         sum += 1
-    if val<=0.09:
+    if val<=0.1:
         sum += 1
-    if std>=5 and std<=10 :
-        sum += 1
-    
+    if std>=0 and std<=15 :
+       sum += 1
+    '''
+    '''
     # 對完全黑而言
-    if entropy >= 3.8 and entropy <= 4.3:
+    if entropy >= 1 and entropy <= 5.2:
         sum = sum + 1
-    if mostNum >= 0 and mostNum <= 25:
+    if mostNum >= 0 and mostNum <=50:
         sum += 1
-    if val <= 0.8:
+    if val <= 1.4:
         sum += 1
-    if std >= 5 and std <= 7:
+    if std >= 2 and std <= 20:
         sum += 1
-    
+    '''
     
     if sum==4:
         #刪除檔案
-        #os.remove(filename)
+        os.remove(filename)
+
 
         print(filename)
-'''
+
 
 
 
